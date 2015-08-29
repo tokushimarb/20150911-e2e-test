@@ -1,16 +1,22 @@
 require 'capybara'
 require 'selenium-webdriver'
 
-url = "http://localhost:3000"
+selenium_config = {}
+selenium_config[:browser] = :remote
+selenium_config[:url] = "http://10.0.2.2:4444/wd/hub"
 
 Capybara.register_driver :remote_firefox do |app|
-  Capybara::Selenium::Driver.new(app, { browser: :remote, url: url })
+  Capybara::Selenium::Driver.new(app, selenium_config)
 end
 
 Capybara.register_driver :remote_chrome do |app|
-  Capybara::Selenium::Driver.new(app, { browser: :remote, desired_capabilities: :chrome, url: url })
+  selenium_config[:desired_capabilities] = :chrome
+  Capybara::Selenium::Driver.new(app, selenium_config)
 end
 
+Capybara.app_host = "http://localhost:3000"
+# Firefox を使用する人は remote_filefox を、
+# Google Chrome を使用する人は remote_chrome を有効にします
 Capybara.default_driver = :remote_firefox
 # Capybara.default_driver = :remote_chrome
 
