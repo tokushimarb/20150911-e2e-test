@@ -15,6 +15,7 @@ Capybara.register_driver :remote_chrome do |app|
 end
 
 Capybara.app_host = "http://localhost:3000"
+Capybara.default_max_wait_time = 5
 # Firefox を使用する人は remote_filefox を、
 # Google Chrome を使用する人は remote_chrome を有効にします
 Capybara.default_driver = :remote_firefox
